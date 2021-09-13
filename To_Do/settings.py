@@ -147,4 +147,5 @@ EMAIL_HOST_USER = 'venocrypt@gmail.com'
 EMAIL_HOST_PASSWORD = 'Venocrypt400#'
 
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 django_heroku.settings(locals())
