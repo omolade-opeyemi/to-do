@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
-from decouple import config
+# import django_heroku
+# import dj_database_url
+# from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,9 +29,9 @@ SECRET_KEY = 'django-insecure-iv!ejd9a$+*^e_w2yv(*p1#4v=5k0)!7wqarqx2+f$#56j7h_5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['opeyemi-to-do.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['opeyemi-to-do.herokuapp.com', '127.0.0.1', '10.0.12.195']
 
-
+#10.0.12.195:80
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,12 +44,23 @@ INSTALLED_APPS = [
     'list',
     'account',
     'password',
+    'api',
+    'rest_framework',
+    'knox',
+    "corsheaders",
+    "drf_yasg",
+]
+CORS_ALLOWED_ORIGINS = [
+    
+    "http://localhost:4200",
+    "http://127.0.0.1:9000",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -131,10 +142,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    ]
-
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # Default primary key field type
@@ -153,4 +164,12 @@ EMAIL_HOST_PASSWORD = 'Venocrypt400#'
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
